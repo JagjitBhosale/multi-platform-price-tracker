@@ -62,3 +62,44 @@ A full-stack, multi-platform product price tracking system that scrapes prices f
   whatsappNumber: String,
   createdAt: Date
 }
+
+{
+  user: ObjectId,
+  productName: String,
+  platforms: {
+    price,
+    mrp,
+    discount,
+    rating,
+    productLink,
+    imageUrl,
+    lastUpdated
+  },
+  lowestPrice: Number,
+  lowestPricePlatform: String,
+  trackingEnabled: Boolean,
+  notifyByEmail: Boolean,
+  notifyByWhatsApp: Boolean,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+Backend/
+├── src/
+│   ├── config/db.js
+│   ├── models/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── routes/
+│   └── index.js
+
+Frontend/
+├── app/
+│   ├── auth/
+│   ├── tracks/
+│   ├── api/
+│   └── page.tsx
+├── contexts/
+│   └── AuthContext.tsx
+
