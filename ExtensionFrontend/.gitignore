@@ -1,0 +1,11 @@
+# Icons (add your custom icons)
+icons/*.png
+!icons/.gitkeep
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+

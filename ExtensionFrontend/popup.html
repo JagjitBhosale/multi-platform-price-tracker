@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PriceCompare</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="extension-container">
+    <!-- Header -->
+    <header class="extension-header">
+      <div class="header-content">
+        <div class="logo-section">
+          <div class="logo-icon">P</div>
+          <span class="logo-text">PriceCompare</span>
+        </div>
+        <div class="header-actions">
+          <button id="tracksTab" class="tab-button active">Compare</button>
+          <button id="myTracksTab" class="tab-button">My Tracks</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Compare Tab -->
+    <div id="compareTab" class="tab-content active">
+      <!-- Loading State -->
+      <div id="loadingState" class="loading-container">
+        <div class="spinner"></div>
+        <p class="loading-text">Scraping prices across platforms...</p>
+        <div class="loading-platforms">
+          <span class="platform-tag" data-platform="amazon">Amazon</span>
+          <span class="platform-tag" data-platform="flipkart">Flipkart</span>
+          <span class="platform-tag" data-platform="myntra">Myntra</span>
+          <span class="platform-tag" data-platform="reliance">Reliance</span>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" class="error-container hidden">
+        <div class="error-icon">⚠️</div>
+        <p class="error-text" id="errorMessage">Failed to load product prices</p>
+        <button id="retryButton" class="btn-primary">Try Again</button>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-container hidden">
+        <div class="empty-icon">🔍</div>
+        <p class="empty-text">Navigate to a product page and click the extension to compare prices</p>
+        <button id="manualSearchButton" class="btn-secondary">Enter Product Name</button>
+      </div>
+
+      <!-- Results -->
+      <div id="resultsContainer" class="results-container hidden">
+        <!-- Current URL Info -->
+        <div class="url-info">
+          <span class="url-label">Current page:</span>
+          <span class="url-text" id="currentUrlText"></span>
+          <span class="cache-badge" id="cacheBadge" style="display: none; font-size: 10px; color: #10b981; margin-left: auto;">⚡ Cached</span>
+        </div>
+
+        <!-- Best Deal Banner -->
+        <div id="bestDealBanner" class="best-deal-banner hidden">
+          <div class="best-deal-content">
+            <div class="trophy-icon">🏆</div>
+            <div class="best-deal-info">
+              <div class="best-deal-badge">Best Deal</div>
+              <div class="best-deal-price">
+                Lowest: <span id="bestDealPrice"></span>
+              </div>
+              <div class="best-deal-platform" id="bestDealPlatform"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Cards -->
+        <div id="productsList" class="products-list"></div>
+
+        <!-- Track Button -->
+        <div class="track-actions">
+          <button id="trackProductButton" class="btn-track hidden">
+            <span class="bookmark-icon">📌</span>
+            Add to Track
+          </button>
+          <div id="trackSuccess" class="track-success hidden">
+            ✅ Product added to tracking!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- My Tracks Tab -->
+    <div id="myTracksTab" class="tab-content hidden">
+      <!-- Login Required -->
+      <div id="loginRequired" class="login-required hidden">
+        <div class="login-icon">🔐</div>
+        <p class="login-text">Please login to view tracked products</p>
+        <button id="loginButton" class="btn-primary">Login</button>
+        <button id="syncTokenButton" class="btn-secondary" style="margin-top: 8px;">🔄 Sync Token from Website</button>
+      </div>
+
+      <!-- Loading Tracks -->
+      <div id="loadingTracks" class="loading-container">
+        <div class="spinner"></div>
+        <p class="loading-text">Loading tracked products...</p>
+      </div>
+
+      <!-- Empty Tracks -->
+      <div id="emptyTracks" class="empty-container hidden">
+        <div class="empty-icon">📋</div>
+        <p class="empty-text">No tracked products yet</p>
+        <p class="empty-subtext">Add products from the Compare tab to track their prices</p>
+      </div>
+
+      <!-- Tracks List -->
+      <div id="tracksList" class="tracks-list hidden"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+

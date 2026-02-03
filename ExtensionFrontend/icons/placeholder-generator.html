@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Icon Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .icon-preview { margin: 20px 0; }
+    canvas { border: 1px solid #ddd; margin: 10px; }
+    .download { margin-top: 10px; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>PriceCompare Icon Generator</h1>
+  <p>Click the buttons below to generate and download icons.</p>
+  
+  <div class="icon-preview">
+    <h3>16x16 Icon</h3>
+    <canvas id="icon16" width="16" height="16"></canvas>
+    <div class="download">
+      <button onclick="downloadIcon('icon16', 16)">Download icon16.png</button>
+    </div>
+  </div>
+  
+  <div class="icon-preview">
+    <h3>48x48 Icon</h3>
+    <canvas id="icon48" width="48" height="48"></canvas>
+    <div class="download">
+      <button onclick="downloadIcon('icon48', 48)">Download icon48.png</button>
+    </div>
+  </div>
+  
+  <div class="icon-preview">
+    <h3>128x128 Icon</h3>
+    <canvas id="icon128" width="128" height="128"></canvas>
+    <div class="download">
+      <button onclick="downloadIcon('icon128', 128)">Download icon128.png</button>
+    </div>
+  </div>
+  
+  <script>
+    function drawIcon(canvasId, size) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      
+      // Background gradient
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#3b82f6');
+      gradient.addColorStop(1, '#2563eb');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      
+      // Add rounded corners
+      ctx.globalCompositeOperation = 'destination-in';
+      ctx.beginPath();
+      const radius = size * 0.125; // 12.5% radius
+      ctx.roundRect(0, 0, size, size, radius);
+      ctx.fill();
+      
+      // Reset for text
+      ctx.globalCompositeOperation = 'source-over';
+      
+      // Text "P"
+      ctx.fillStyle = 'white';
+      ctx.font = `bold ${size * 0.6}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('P', size / 2, size / 2);
+    }
+    
+    // Polyfill for roundRect if not available
+    if (!CanvasRenderingContext2D.prototype.roundRect) {
+      CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+        if (w < 2 * r) r = w / 2;
+        if (h < 2 * r) r = h / 2;
+        this.beginPath();
+        this.moveTo(x + r, y);
+        this.arcTo(x + w, y, x + w, y + h, r);
+        this.arcTo(x + w, y + h, x, y + h, r);
+        this.arcTo(x, y + h, x, y, r);
+        this.arcTo(x, y, x + w, y, r);
+        this.closePath();
+        return this;
+      };
+    }
+    
+    function downloadIcon(canvasId, size) {
+      const canvas = document.getElementById(canvasId);
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `icon${size}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+    
+    // Draw all icons on load
+    window.onload = () => {
+      drawIcon('icon16', 16);
+      drawIcon('icon48', 48);
+      drawIcon('icon128', 128);
+    };
+  </script>
+</body>
+</html>
+
