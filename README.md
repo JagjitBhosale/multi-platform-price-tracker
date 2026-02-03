@@ -3,7 +3,7 @@
 A full-stack, multi-platform product price tracking system that scrapes prices from e-commerce websites, compares them across platforms, stores historical data, and sends automated notifications (WhatsApp/Email) when prices change.
 
 ---
-
+<p align="center"> <img src="assets/technical-flow.png" width="900" /> </p>
 ## ✨ Features
 
 ### 🔐 Authentication
